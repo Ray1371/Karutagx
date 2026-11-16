@@ -1,6 +1,6 @@
 import './index.css'
-import { db } from './Upload';
-import type { Card } from './Upload';
+// import { db } from './Upload';
+// import type { Card } from './Upload';
 
 export default function BulkButton() {
 
@@ -17,7 +17,7 @@ export default function BulkButton() {
       Print is 1001 or above
       <button className="bulk-button tooltip-button"
       // Plan with this: Carry selectBulk back to MainMenu and use it there
-        onClick={selectBulk}
+        // onClick={selectBulk}
       >
         Auto-Add Bulk
       </button>

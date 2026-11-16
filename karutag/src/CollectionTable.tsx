@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import type { Card } from "./Upload";
 import './index.css'
+import calcMaxEffort from "./maxEffort";
 
 type CollectionTableProps = {
   cards: Card[];
@@ -10,7 +11,19 @@ type CollectionTableProps = {
   onToggleSelectAll: () => void;
   sortKey: string;
   sortDir: string;
-  onToggleSort: (key: 'wishlists' | 'character' | 'series' | 'edition' | 'number') => void;
+  onToggleSort: (key: 
+    'wishlists' 
+    | 'character' 
+    | 'series' 
+    | 'edition' 
+    | 'number'
+    | 'tag'
+
+    | 'quality' 
+    | 'worker.effort'
+    | 'maxeffort'
+    | 'frame'
+  ) => void;
 };
 
 export default function CollectionTable({
@@ -88,7 +101,40 @@ export default function CollectionTable({
             Series</th>
           <th className='col-edition'>Ed.</th>
           <th className='col-print'>Print</th>
-          <th className='col-tag'>Tag</th>
+
+          <th className='col-tag'>Tag
+            {sortKey === 'tag' && (
+              <button onClick={() => onToggleSort('tag')}>
+                {sortKey === 'tag' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅'}
+              </button>
+            )}
+          </th>
+
+          <th className='col-quality'>Quality
+            <button onClick={() => onToggleSort('quality')}>
+              {sortKey === 'quality' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅'}
+            </button>
+          </th>
+
+          <th className='col-effort'>Effort
+            <button onClick={() => onToggleSort('worker.effort')}>
+              {sortKey === 'effort' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅'}
+            </button>
+          </th>
+          <th className='col-toughness'>Toughness</th>
+          <th className='col-maxeffort'>Max Effort
+            <button onClick={() => onToggleSort('maxeffort')}>
+              {sortKey === 'maxeffort' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅'}
+            </button>
+          </th>
+          <th className='col-frame'>Frame
+            <button onClick={() => onToggleSort('frame')}>
+              {sortKey === 'frame' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅'}
+            </button>
+          </th>
+          <th className='col-dye'>Dye
+            
+          </th>
         </tr>
       </thead>
 
@@ -118,6 +164,14 @@ export default function CollectionTable({
               <td className='col-edition'>{card.edition}</td>
               <td className='col-print'>{card.number}</td>
               <td className='col-tag'>{card.tag}</td>
+
+              <td className='col-quality'>{card.quality}</td>
+              <td className='col-effort'>{card.worker_effort}</td>
+              {/* todo: go back to upload.tsx and fix up worker fields if needed */}
+              <td className='col-toughness'>{card.worker_toughness}</td>
+              <td className='col-maxeffort'>{card.worker_effort ? calcMaxEffort(card) : ''}</td>
+              <td className='col-frame'>{card.frame}</td>
+              <td className='col-dye'>{card.dye_name}</td>
             </tr>
           ))
         }
@@ -220,4 +274,4 @@ const PageDiv = ({
   </div>
   );
 }
-  
+

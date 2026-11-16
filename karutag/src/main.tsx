@@ -12,10 +12,8 @@ import App from './App';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     {/* Wrap App in any providers if needed */}
-    {/* <MyContextProvider> */}
-    {/* <BrowserRouter> */}
+
     <App />
-    {/* </BrowserRouter> */}
-    {/* </MyContextProvider> */}
+
   </React.StrictMode>
 );

@@ -3,16 +3,42 @@ import type { Card } from "./Upload";
 // import Dexie from "dexie";
 import { useState, type ChangeEvent } from "react";
 import {db} from './Upload';
-import { TaggingBarPortal } from "./TagPortal";
+// import { TaggingBarPortal } from "./TagPortal";
 import './index.css'
+import calcMaxEffort from "./maxEffort";
+
 
 type SelectedTableProps = {
   cards: Card[];
   selected: Set<string>;
   onToggleOne: (code: string) => void;
-    sortKey: 'wishlists' | 'character' | 'series' | 'edition' | 'number';
+    sortKey: 
+    'wishlists' 
+    | 'character' 
+    | 'series' 
+    | 'edition' 
+    | 'number' 
+    | 'tag' 
+    | 'quality' 
+    | 'worker.effort' 
+    | 'maxeffort' 
+    | 'frame' 
+    | 'dye_name';
+
     sortDir: 'asc' | 'desc';
-    onToggleSort: (key: 'wishlists' | 'character' | 'series' | 'edition' | 'number') => void;
+    onToggleSort: (key: 
+      'wishlists' 
+      | 'character' 
+      | 'series' 
+      | 'edition' 
+      | 'number' 
+      | 'tag' 
+      | 'quality' 
+      | 'worker.effort' 
+      | 'maxeffort' 
+      | 'frame' 
+      | 'dye_name'
+    ) => void;
     isSingleton: boolean;
 };
 
@@ -103,7 +129,6 @@ export default function SelectedTable({
 type TagPrompt = { id: string; tag: string; codes: string[]; message: string };
   const [tagMessages, setTagMessages] = useState<TagPrompt[]>([]);
   const [tagName, setTagName] = useState('');
-// const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
   setTagName(event.target.value);
 };
@@ -189,6 +214,14 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
           <th className='col-edition'>Ed.</th>
           <th className='col-print'>Print</th>
           <th className='col-tag'>Tag</th>
+{/* todo: learn about how to let users pick and choose which columns to see */}
+          <th className='col-quality'>Quality</th>
+          <th className='col-effort'>Effort</th>
+          <th className='col-toughness'>Toughness</th>
+          <th className='col-maxeffort'>Max Effort</th>
+          <th className='col-frame'>Frame</th>
+          <th className='col-dye'>Dye</th>
+
           <th>
             <p>Tag Selected As:</p>
             <input 
@@ -229,6 +262,14 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
             <td className="col-edition">{card.edition}</td>
             <td className="col-print">{card.number}</td>
             <td className="col-tag">{card.tag}</td>
+
+            <td className='col-quality'>{card.quality}</td>
+            <td className='col-effort'>{card.worker_effort}</td>
+            {/* todo: go back to upload.tsx and fix up worker fields if needed */}
+            <td className='col-toughness'>{card.worker_toughness}</td>
+            <td className='col-maxeffort'>{card.worker_effort ? calcMaxEffort(card) : ''}</td>
+            <td className='col-frame'>{card.frame}</td>
+            <td className='col-dye'>{card.dye_name}</td>
           </tr>
         ))}
       </tbody>
@@ -254,3 +295,8 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     
   );
 }
+
+
+// const nameCheck = (name: string | undefined):string => {
+//   return name.includes('Mystic') ? 'Mystic Dye' : 'false';
+// }

@@ -9,13 +9,13 @@ import SelectedTable from "./SelectedTable";
 
 import './App.css';
 import { useEffect, useState, useMemo } from 'react';
-// import Papa from 'papaparse';
+
 import { useLiveQuery } from 'dexie-react-hooks';
 
-import handleUpload, { db } from './Upload';
+// import handleUpload, { db } from './Upload';
+import {db} from './Upload';
 import type { Card } from './Upload';
-// import BulkButton from './BulkButton';
-// import type { progressSignal } from './progressSignals';
+
 
 import { searchCards,
          TEXT_KEYS,
@@ -27,10 +27,11 @@ import { searchCards,
 export default function MainMenu() {
 //Sorting logic
   type SortDir = 'asc' | 'desc';
-  type SortKey = 'wishlists' | 'character' | 'series' | 'edition' | 'number';
+  type SortKey = 'wishlists' | 'character' | 'series' | 'edition' | 'number' | 'tag' | 'quality' | 'worker.effort' | 'maxeffort' | 'frame' | 'dye_name';
 
   // Upload-related state
-  const [_selectedFile, setSelectedFile] = useState<File | null>(null);
+  // const [_selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [_selectedFile] = useState<File | null>(null);
   const [isUploading] = useState(false);
   const [rowCount] = useState(0);
   const [cardsUpdated] = useState(0);
@@ -203,11 +204,6 @@ function toggleSort(nextKey: SortKey) {
     query.toArray().then(setFilteredCards);
   }, [searchFilter, fullCollection]);
 
-  //  //WL limit 
-  //   useEffect(()=>{
-  //     setWlLimit(2);
-  //   },[wlLimit])
-
 
   //Select all cards and toggle
       const allSelected =
@@ -306,9 +302,6 @@ function toggleSort(nextKey: SortKey) {
           data-tooltip="Press to select all cards within:
           w<=[WL Limit](default 100) p>=1001 t:none
           ."
-          // onClick={()=>{
-            
-          // }}
         >
           ?
         </button>

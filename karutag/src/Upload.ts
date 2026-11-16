@@ -1,23 +1,3 @@
-// //temp
-// import { db } from './db';
-// import type { Card } from './db';
-// import { uploadProgress } from './processSignals';
-
-// /**
-//  * Handles uploading an array of cards to the Dexie database.
-//  * It updates the upload progress signal so that the UI can show progress feedback.
-//  */
-// export async function handleUpload(cards: Card[]) {
-//   const total = cards.length;
-//   let uploaded = 0;
-
-//   for (const card of cards) {
-//     await db.cards.put(card);
-//     uploaded++;
-//     // Update progress as a percentage
-//     uploadProgress.set(Math.round((uploaded / total) * 100));
-//   }
-// }
 
 // Upload.ts
 import './App.css';
@@ -43,6 +23,18 @@ interface Card {
   tag?: string;
   burnvalue?: number;
 
+  quality?: string;
+  frame?: string;
+  dye_name?: string;
+  worker_effort?: number;//needed
+  worker_toughness?: string;//needed
+  
+  worker_quickness:string;
+  worker_purity:string;
+  worker_dropper:string;
+  worker_grabber:string;
+
+
   // tokens for partial match searching
   charaTokens: string[];
   seriesTokens: string[];
@@ -63,6 +55,12 @@ db.version(1).stores({
   collection: '&code, number, edition, series, grabber, obtainedTimestamp, charaTokens*, seriesTokens*',
   toUpload: '&code, number, edition, series, grabber, obtainedTimestamp, charaTokens*, seriesTokens*',
 });
+
+db.version(2).stores({
+  collection: '&code, number, edition, series, grabber, obtainedTimestamp, charaTokens*, seriesTokens*,quality,frame,dye_name,worker_effort,worker_toughness,  worker_quickness,  worker_purity,  worker_dropper,  worker_grabber',
+  toUpload: '&code, number, edition, series, grabber, obtainedTimestamp, charaTokens*, seriesTokens*,quality,frame,dye_name,worker_effort,worker_toughness,worker_quickness,  worker_purity,  worker_dropper,  worker_grabber',
+});
+
 
 // --------------------
 // Token helpers
@@ -96,6 +94,9 @@ export const handleUpload = async (
 
   Papa.parse<Card>(file, {
     header: true,
+    transformHeader: (header) => {
+      return header.replace(/\./g, '_').toLowerCase();
+    },
     skipEmptyLines: true,
     dynamicTyping: true,
     worker: false,//do we?
