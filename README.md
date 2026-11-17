@@ -1,6 +1,6 @@
 # Karutag
 
-The React application lives in `karutag/src`. The root `index.html` is a Webpack entry that loads `main.tsx`, which forwards to the app's `karutag/src/main.tsx` entry. The nested Vite project can also be run on its own.
+The React application lives in `karutag/src` and is built with Vite. GitHub Pages publishes the compiled `karutag/dist` output under the `/Karutagx/` base path.
 
 ## Requirements
 
@@ -20,22 +20,15 @@ npm --prefix karutag install
 
 ## Run and build
 
-Build the root Webpack entry:
+Build the app for production:
 
 ```bash
-npm run build
-```
-
-Run the standalone Vite development server or build it:
-
-```bash
-npm --prefix karutag run dev
 npm --prefix karutag run build
 ```
 
-Run the root TypeScript check across the app source:
+Run the Vite development server:
 
 ```bash
-npm run check:types
+npm --prefix karutag run dev
 ```
 
