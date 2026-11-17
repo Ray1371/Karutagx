@@ -4,7 +4,8 @@
   "name": "webpack-project",
   "type": "module",
   "engines": {
-    "node": ">=22.6.0"
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
   },
   "scripts": {
     "build": "webpack --mode=production --config-node-env=production",
@@ -17,5 +18,8 @@
     "typescript": "^6.0.3",
     "webpack": "^5.112.2",
     "webpack-cli": "^7.3.1"
+  },
+  "dependencies": {
+    "24": "^0.0.0"
   }
 }
